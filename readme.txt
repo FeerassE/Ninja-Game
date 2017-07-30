@@ -1,7 +1,17 @@
 Ninja Run
 
-A cute free running side-scroller! I made this using ThreeJS! 
+A cute free running side-scroller! I made this using ThreeJS. 
 
-Here’s a link to play:
+Click the link below to play:
 
 http://bamboo-forest.surge.sh/
+
+
+How to play:
+
+Press Space to jump
+
+Refresh the page to start over
+
+
+Thanks for playing!
