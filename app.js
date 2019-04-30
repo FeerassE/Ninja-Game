@@ -447,6 +447,9 @@ function handleJump(e) {
             if(e.keyCode == 32){
                 jump = !jump;
             }
+            else if(e.type == touchstart){
+                jump = !jump;
+            }
         }
     }
 }
@@ -532,7 +535,7 @@ function loop() {
                 console.log('You lose!')
                 container.removeChild(renderer.domElement);
 
-                var gameOver = `<div id="gameover"><h1>Game Over</h1><h3>Refresh to Play Again</h3><div class="score"></div>`;
+                var gameOver = `<div id="gameover"><h1>Game Over</h1><h3>Refresh to Play Again</h3></div>`;
 
                 var parser = new DOMParser();
                 var doc = parser.parseFromString(gameOver, 'text/xml')
