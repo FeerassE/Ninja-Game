@@ -447,7 +447,7 @@ function handleJump(e) {
             if(e.keyCode == 32){
                 jump = !jump;
             }
-            else if(e.type == touchstart){
+            else if(e.type == "touchstart"){
                 jump = !jump;
             }
         }
