@@ -7,7 +7,9 @@ var Colors = {
 	blue:0x68c3c0,
 };
 
-var gameOver = '<div id="gameover"><h1>GAME OVER</h1></div>';
+var score = 0;
+var seconds = 0;
+var gamescreenscore = null;
 
 window.addEventListener('load', init, false);
 
@@ -20,8 +22,9 @@ function init() {
     createNinja();
     createGround();
     createForest();
-    createArrow();
+    setTimeout(createArrow, 10000);
     document.addEventListener('keydown', handleJump, false);
+    document.addEventListener('touchstart', handleJump, false);
 
     loop();
     
@@ -459,7 +462,6 @@ var hit = false;
 
 // -------- Loop On Each Frame -------//
 function loop() {
-
     // // Forest Animation
     for(let i=0; i<2; i++){
          forestArray[i].mesh.position.x -= 3;
@@ -515,31 +517,48 @@ function loop() {
 
 
         //Arrow Spawn Animation
-        if (arrowSpawn[0].mesh.position.x < (-250)){
-            arrowSpawn[0].mesh.position.x = 175;
-            arrowSpeed = ((4.5*Math.random())+1);
+        if(arrowSpawn[0] != undefined){
+            if (arrowSpawn[0].mesh.position.x < (-250)){
+                arrowSpawn[0].mesh.position.x = 175;
+                arrowSpeed = ((4.5*Math.random())+1);
+            }
+            arrowSpawn[0].mesh.position.x -= arrowSpeed;
         }
-        arrowSpawn[0].mesh.position.x -= arrowSpeed;
 
-        
         //Losing
-        if((ninja.mesh.position.y < 15) && 
-        ((arrowSpawn[0].mesh.position.x <-20)&&(arrowSpawn[0].mesh.position.x > -23))){
-            console.log('You lose!')
-            container.removeChild(renderer.domElement);
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(gameOver, 'text/xml')
-            container.appendChild(doc.firstChild);
-            return null
+        if(arrowSpawn[0] != undefined){
+            if((ninja.mesh.position.y < 15) && 
+            ((arrowSpawn[0].mesh.position.x <= -20)&&(arrowSpawn[0].mesh.position.x >= -23))){
+                console.log('You lose!')
+                container.removeChild(renderer.domElement);
+
+                var gameOver = `<div id="gameover"><h1>Game Over</h1><h3>Refresh to Play Again</h3><div class="score"></div>`;
+
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(gameOver, 'text/xml')
+                container.appendChild(doc.firstChild);
+
+                return null
+            }
         }
+    
+    var gamescreenscore = document.querySelector('#game-score');
 
 
+    gamescreenscore.textContent = `Score: ${score}`;
 
     // render the scene
     renderer.render(scene,camera);
+    
+    seconds++;
+    if(seconds%100 == 0){
+        score++;
+    }
+
 
     // call the loop function again
     requestAnimationFrame(loop);
+
 }
 
 
