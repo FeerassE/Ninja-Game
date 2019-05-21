@@ -25,6 +25,7 @@ function init() {
     setTimeout(createArrow, 10000);
     document.addEventListener('keydown', handleJump, false);
     document.addEventListener('touchstart', handleJump, false);
+    document.addEventListener('click', handleJump, false);
 
     loop();
     
@@ -448,6 +449,9 @@ function handleJump(e) {
                 jump = !jump;
             }
             else if(e.type == "touchstart"){
+                jump = !jump;
+            }
+            else if(e.type == "click"){
                 jump = !jump;
             }
         }
